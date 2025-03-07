@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Cricket Scorecard</title>
+    <link rel="stylesheet" href="crick.css">
+</head>
+
+<body>
+    <div class="a">
+        <div class="container1">
+        <h2>CRICKET HERE LET'S PLAY !! </h2>
+        <label for="name" id="lab"> Enter Team name </label><br>
+        <input type="text" style="margin: 10px;padding: 5px;"><br>
+        <button class="btn" id="plname" onclick="plname1()">Enter players name</button>
+    </div>
+    </div>
+    
+    <div class="a">
+        <div class="container">
+            <h1> Scorecard</h1>
+
+            <div class="scoreboard">
+                <p><strong>Total Score:</strong> <span id="totalScore">0</span></p>
+                <p><strong>Wickets:</strong> <span id="wickets">0</span></p>
+                <p><strong>Overs:</strong> <span id="overs">0</span>.<span id="balls">0</span></p>
+                <p><strong>Current Batsmen:</strong> <span id="batsmanOnStrike">Batsman 1</span> (on strike), <span
+                        id="batsmanNonStrike">Batsman 2</span> (non-striker)</p>
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="scoreRun(1)">1 Run</button>
+                <button class="btn" onclick="scoreRun(2)">2 Runs</button>
+                <button class="btn" onclick="scoreRun(3)">3 Runs</button>
+                <button class="btn" onclick="scoreRun(4)">4 (Boundary)</button>
+                <button class="btn" onclick="scoreRun(6)">6 (Six)</button>
+                <button class="btn" onclick="wicketFall()">Wicket</button>
+            </div>
+        </div><br><br>
+      
+        
+
+
+
+        <script src="crick.js">    </script>
+</body>
+
+</html>
