@@ -1,3 +1,42 @@
+let count = 0;
+
+function playerName() {
+  if (count >= 11) return; // Stop at 11 players
+
+  let input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = `Enter Player ${count + 1} Name`;
+  input.style.margin = "10px";
+  input.classList.add("player-input");
+
+  input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && count < 10) {
+      playerName();
+    }
+  });
+
+  document.getElementById("plname1").appendChild(input);
+  count++;
+
+  if (count === 11) {
+    let submitBtn = document.createElement("button");
+    submitBtn.textContent = "Submit";
+    submitBtn.classList.add("btn", "submit-btn"); // Add both classes
+    submitBtn.style.margin = "10px";
+    document.getElementById("plname1").appendChild(submitBtn);
+}
+
+// **Event delegation: Detect click on submit button**
+document.getElementById("plname1").addEventListener("click", function(event) {
+  if (event.target.classList.contains("submit-btn")) {  
+    document.getElementById("plname1").style.display = "none"; 
+  }
+
+});
+}
+
+
+ 
 let totalScore = 0;
 let wickets = 0;
 let overs = 0;
@@ -65,8 +104,7 @@ function wicketFall() {
 // Add an event listener to the "Wicket Falls" button
 document.getElementById("wicketButton").addEventListener("click", wicketFall);
 
-document.getElementById("plname").addEventListener("click", function plname1(){
-  document.createElement("input");
-  document.appendChild()
-})
+//Adding input
+
+
 
