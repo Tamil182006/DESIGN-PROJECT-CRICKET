@@ -8,55 +8,58 @@ let batsmanOnStrike = "Batsman 1";
 let batsmanNonStrike = "Batsman 2";
 
 function playerName(team) {
+    // Get the number input field based on team
     let plnum = document.getElementById(`playernum-${team}`);
+    // Get the container where player input fields will be appended
     let container = document.getElementById(`plname${team === 'team1' ? '1' : '2'}`);
-    let plvalue = parseInt(plnum.value);
+    let plvalue = parseInt(plnum.value); // Parse number of players
 
     if (isNaN(plvalue) || plvalue <= 0) {
         alert("Please enter a valid number of players.");
         return;
     }
 
-    // Hide the input field and button after submission
+    // Hide the number input and original submit button
     plnum.style.display = "none";
     let existingButton = container.querySelector("button");
     if (existingButton) existingButton.style.display = "none";
 
     let nameInputs = [];
+
+    // Dynamically create input fields for each player
     for (let i = 0; i < plvalue; i++) {
         let plinput = document.createElement("input");
-        plinput.classList.add("player-name-input");
+        plinput.classList.add("player-name-input", "player-input");
         plinput.placeholder = `Enter Player ${i + 1} Name`;
-        plinput.classList.add("player-input");
         container.appendChild(plinput);
         nameInputs.push(plinput);
         container.appendChild(document.createElement("br"));
     }
 
+    // Create the FINAL SUBMIT button
     let submitBtn = document.createElement("button");
-    submitBtn.textContent = "SUBMIT";
+    submitBtn.textContent = "FINAL SUBMIT";
     submitBtn.classList.add("btn1", "submit-btn");
     submitBtn.style.margin = "10px";
     container.appendChild(submitBtn);
 
+    // FINAL SUBMIT button logic
     submitBtn.addEventListener("click", function () {
         let playerNames = nameInputs.map(input => input.value.trim()).filter(name => name !== "");
 
         if (playerNames.length === plvalue) {
             if (team === 'team1') {
-                document.getElementById("batsmanOnStrike").innerText = playerNames[0]; 
-                document.getElementById("batsmanNonStrike").innerText = playerNames[1] || "Batsman 2"; 
+                document.getElementById("batsmanOnStrike").innerText = playerNames[0];
+                document.getElementById("batsmanNonStrike").innerText = playerNames[1] || "Batsman 2";
+                document.getElementById("a").style.display = "none"; // Hides team 1 section
+            } else if (team === 'team2') {
+                document.getElementById("a1").style.display = "none"; // Hides team 2 section
             }
-
-            // Hide input fields after submitting names
-            container.style.display = "none"; 
         } else {
             alert("Please enter names for all players.");
         }
     });
 }
-
-
 // Get overs input from user and set the limit
 let input1 = document.getElementById("inp");
 if (input1) {
@@ -83,7 +86,6 @@ function updateScoreboard() {
 // Function to handle scoring runs
 function scoreRun(runs) {
     if (wickets < 10 && overs < oversLimit) {
-        // Check overs limit
         totalScore += runs;
         balls++;
 
@@ -106,7 +108,6 @@ function scoreRun(runs) {
 // Function to handle wicket fall
 function wicketFall() {
     if (wickets < 10 && overs < oversLimit) {
-        // Check overs limit
         wickets++;
         balls++;
 
