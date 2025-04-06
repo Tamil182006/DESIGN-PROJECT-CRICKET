@@ -1,5 +1,5 @@
 let count = 0;
-let oversLimit; // Store the maximum overs limit
+let oversLimit;
 let totalScore = 0;
 let wickets = 0;
 let overs = 0;
@@ -8,25 +8,21 @@ let batsmanOnStrike = "Batsman 1";
 let batsmanNonStrike = "Batsman 2";
 
 function playerName(team) {
-    // Get the number input field based on team
     let plnum = document.getElementById(`playernum-${team}`);
-    // Get the container where player input fields will be appended
     let container = document.getElementById(`plname${team === 'team1' ? '1' : '2'}`);
-    let plvalue = parseInt(plnum.value); // Parse number of players
+    let plvalue = parseInt(plnum.value);
 
     if (isNaN(plvalue) || plvalue <= 0) {
         alert("Please enter a valid number of players.");
         return;
     }
 
-    // Hide the number input and original submit button
     plnum.style.display = "none";
     let existingButton = container.querySelector("button");
     if (existingButton) existingButton.style.display = "none";
 
     let nameInputs = [];
 
-    // Dynamically create input fields for each player
     for (let i = 0; i < plvalue; i++) {
         let plinput = document.createElement("input");
         plinput.classList.add("player-name-input", "player-input");
@@ -36,36 +32,60 @@ function playerName(team) {
         container.appendChild(document.createElement("br"));
     }
 
-    // Create the FINAL SUBMIT button
     let submitBtn = document.createElement("button");
     submitBtn.textContent = "FINAL SUBMIT";
     submitBtn.classList.add("btn1", "submit-btn");
     submitBtn.style.margin = "10px";
     container.appendChild(submitBtn);
 
-    // FINAL SUBMIT button logic
+    // ✅ FINAL SUBMIT button logic
     submitBtn.addEventListener("click", function () {
         let playerNames = nameInputs.map(input => input.value.trim()).filter(name => name !== "");
+        let teamNameInput = document.getElementById(`${team}-name`);
+        let teamname = teamNameInput ? teamNameInput.value.trim() : "";
 
-        if (playerNames.length === plvalue) {
-            if (team === 'team1') {
-                document.getElementById("batsmanOnStrike").innerText = playerNames[0];
-                document.getElementById("batsmanNonStrike").innerText = playerNames[1] || "Batsman 2";
-                document.getElementById("a").style.display = "none"; // Hides team 1 section
-            } else if (team === 'team2') {
-                document.getElementById("a1").style.display = "none"; // Hides team 2 section
-            }
-        } else {
-            alert("Please enter names for all players.");
+        if (!teamname || playerNames.length !== plvalue) {
+            alert("Please enter the team name and all player names.");
+            return;
+        }
+
+        // ✅ Send data to backend
+        fetch("http://localhost:3000/add-team", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                team: team,            // 'team1' or 'team2'
+                teamName: teamname,    // 'rcb', 'csk', etc.
+                players: playerNames,  // ['virat', 'abd']
+            }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log("✅ Server response:", data);
+        })
+        .catch(err => {
+            console.error("❌ Error sending to server:", err);
+        });
+
+        // ✅ UI updates after submission
+        if (team === 'team1') {
+            document.getElementById("batsmanOnStrike").innerText = playerNames[0];
+            document.getElementById("batsmanNonStrike").innerText = playerNames[1] || "Batsman 2";
+            document.getElementById("a").style.display = "none";
+        } else if (team === 'team2') {
+            document.getElementById("a1").style.display = "none";
         }
     });
 }
-// Get overs input from user and set the limit
+
+// ✅ Get overs input from user and set the limit
 let input1 = document.getElementById("inp");
 if (input1) {
     input1.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
-            oversLimit = parseInt(input1.value); // Convert input to number
+            oversLimit = parseInt(input1.value);
             document.getElementById("ov").style.display = "none";
             input1.style.display = "none";
             document.getElementById("total-overs").textContent = `(${oversLimit})`;
@@ -73,7 +93,7 @@ if (input1) {
     });
 }
 
-// Update the display
+// ✅ Update the scoreboard
 function updateScoreboard() {
     document.getElementById("totalScore").innerText = totalScore;
     document.getElementById("wickets").innerText = wickets;
@@ -83,7 +103,7 @@ function updateScoreboard() {
     document.getElementById("batsmanNonStrike").innerText = batsmanNonStrike;
 }
 
-// Function to handle scoring runs
+// ✅ Run scorer logic
 function scoreRun(runs) {
     if (wickets < 10 && overs < oversLimit) {
         totalScore += runs;
@@ -94,18 +114,15 @@ function scoreRun(runs) {
             balls = 0;
         }
 
-        // Rotate strike for odd runs
         if (runs % 2 !== 0) {
-            let temp = batsmanOnStrike;
-            batsmanOnStrike = batsmanNonStrike;
-            batsmanNonStrike = temp;
+            [batsmanOnStrike, batsmanNonStrike] = [batsmanNonStrike, batsmanOnStrike];
         }
     }
 
     updateScoreboard();
 }
 
-// Function to handle wicket fall
+// ✅ Handle wicket
 function wicketFall() {
     if (wickets < 10 && overs < oversLimit) {
         wickets++;
@@ -126,5 +143,4 @@ function wicketFall() {
     updateScoreboard();
 }
 
-// Add an event listener to the "Wicket Falls" button
 document.getElementById("wicketButton").addEventListener("click", wicketFall);
