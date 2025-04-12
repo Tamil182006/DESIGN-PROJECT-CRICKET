@@ -142,4 +142,67 @@ h1 {
 .scorecard-table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
+.hidden {
+  display: none;
+}
+#finalScorecard table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
 
+#finalScorecard th,
+#finalScorecard td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+#finalScorecard th {
+  background-color: #f4f4f4;
+}
+#finalScorecard {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#finalScorecard h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#finalScorecard button {
+  margin: 5px 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.scorecard-table {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.scorecard-table table {
+  border-collapse: collapse;
+  width: 80%;
+  max-width: 700px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.scorecard-table th, .scorecard-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.scorecard-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+.scorecard-controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
