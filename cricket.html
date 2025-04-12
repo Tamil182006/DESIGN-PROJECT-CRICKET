@@ -15,7 +15,8 @@
         <div class="a" id="a">
           <div class="container1" id="plname1">
             <label for="name" id="lab"> Enter Team 1 name </label><br />
-            <input type="text" class="player-input" /><br />
+            <input type="text" id="team1-name" class="player-input" />
+            <br />
             <input
               type="text"
               class="player-input"
@@ -30,7 +31,8 @@
         <div class="a1" id="a1">
           <div class="container1" id="plname2">
             <label for="name" id="lab"> Enter Team 2 name </label><br />
-            <input type="text" class="player-input" /><br />
+            <input type="text" id="team2-name" class="player-input" />
+            <br />
             <input
               type="text"
               class="player-input"
@@ -40,6 +42,16 @@
             <button class="btn" onclick="playerName('team2')">SUBMIT</button>
           </div>
         </div>
+      </div>
+
+      <!-- Toss Logic UI -->
+      <div id="tossSection" style="display: none; margin-top: 20px">
+        <h3 id="tossResult"></h3>
+        <p>
+          <strong>Choose to:</strong>
+          <button class="btn" id="chooseBat">Bat</button>
+          <button class="btn" id="chooseBowl">Bowl</button>
+        </p>
       </div>
 
       <!-- Scorecard Box -->
@@ -54,6 +66,14 @@
               <strong id="ov">Overs</strong
               ><input type="text" class="player-input" id="inp" />
             </p>
+            <div id="bowlerArea" style="display: none">
+              <label for="bowlerSelect"><strong>Select Bowler:</strong></label>
+              <select id="bowlerSelect" class="player-input"></select>
+              <p>
+                <strong>Current Bowler:</strong>
+                <span id="currentBowler">N/A</span>
+              </p>
+            </div>
             <p>
               <strong>Overs:</strong> <span id="overs">0</span>.<span id="balls"
                 >0</span
@@ -72,30 +92,17 @@
             <button class="btn" onclick="scoreRun(4)">4 (Boundary)</button>
             <button class="btn" onclick="scoreRun(6)">6 (Six)</button>
             <button class="btn" onclick="wicketFall()">Wicket</button>
+            <button class="btn" onclick="wideBall()">Wide</button>
+            <button class="btn" onclick="noBall()">No-Ball</button>
           </div>
         </div>
       </div>
     </div>
 
-    <table
-      id="finalScorecard"
-      style="
-        display: none;
-        border: 1px solid black;
-        width: 100%;
-        text-align: center;
-      "
-    >
-      <thead>
-        <tr>
-          <th>Player Name</th>
-          <th>Runs</th>
-          <th>4s</th>
-          <th>6s</th>
-        </tr>
-      </thead>
-      <tbody id="scoreTableBody"></tbody>
-    </table>
+    <!-- Final Scorecard Container -->
+    <div id="finalScorecard" style="display: none; margin-top: 30px">
+      <h3>Final Scorecard</h3>
+    </div>
 
     <script src="../javascripts/crick.js"></script>
   </body>
